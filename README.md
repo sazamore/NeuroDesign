@@ -1,5 +1,6 @@
 # NeuroDesign
 ## Code overview:
+  - PickUp - contains code that executes a pick up-rotate-drop function with the arm
   - Servo + EMG folder - contains all code for working with servos and EMGs (Units 1 and 2)
     - (advanced) **AutoArm_SweepTest** - for testing the functionality of each servo in the arm
     - (intermediate/class on Feb 3) **EMG_Analogread** - for reading EMG signal with analogRead() command, and driving a servo arm conditionally
