@@ -32,7 +32,8 @@
 
 
 ### Bio Amp EXG Pill
-A small, versitile device that can measure EMG, ECG, EOG and EEGs. It has an [extensive GitHub repository](https://github.com/upsidedownlabs/BioAmp-EXG-Pill), with clear examples and videos in the **Software** folder.
+A small, versitile device that can measure EMG, ECG, EOG and EEGs. It has an [extensive GitHub repository](https://github.com/upsidedownlabs/BioAmp-EXG-Pill), with clear examples and videos in the **Software** folder. 
+[Available for purchase here](https://www.tindie.com/products/upsidedownlabs/bioamp-exg-pill-sensor-for-ecg-emg-eog-or-eeg/) - Note a long lead time (~10 days) and potential customs fee, as it ships from India.
 
 #### Working with this device:
   Arduino devices (Uno or Nano recommended)
