@@ -11,11 +11,16 @@
 [Spiker:bit code to control a servo](https://makecode.microbit.org/S47669-98849-21590-38433)
 
 ### MyoWare 2.0
-**Note** The Myoware model is relatively new and there is little support an tested example code available. The following guidelines are based on my testing. I will reach out to the company to get more information hopefully by Feb 3. 
-To work with the input from this device, use the ~analogRead(PIN)~ command and replace "PIN" with the pin variable or A0, A1, etc.
+**Note** The Myoware model is relatively new and there is little support an tested example code available. The following guidelines are based on my testing. I will reach out to the company to get more information hopefully by Feb 3.
+[Available for purchase here](https://www.sparkfun.com/myoware-2-muscle-sensor.html)
 
+#### Working with this device:
+  Arduino devices (Uno or Nano recommended)
+  Use the `analogRead(PIN)` command and replace "PIN" with the pin variable or A0, A1, etc.
+#### Wiring Guide:
 
-Hookup Table:
+![Myoware Sensor](https://www.sparkfun.com/media/catalog/product/cache/a793f13fd3d678cea13d28206895ba0c/D/E/DEV-27924-Myoware-Muscle-Sensor-Back.jpg)
+
 | MyoWare Pin    | Uno Pin        | Notes/conditions             |
 | :------------- | :------------: | ---------------------------: |
 |       GND      |     GND        | Usually white colored pin    |
@@ -23,4 +28,15 @@ Hookup Table:
 |       Env      |       --       | Overdamped values. Don't use |
 |       Rect     |       A0       | Signal smoothing needed (2/3)|
 |       Raw      |       A1       | Optional use.                |
+
+
+### Bio Amp EXG Pill
+A small, versitile device that can measure EMG, ECG, EOG and EEGs. It has an [extensive GitHub repository](https://github.com/upsidedownlabs/BioAmp-EXG-Pill), with clear examples and videos in the **Software** folder.
+
+#### Working with this device:
+  Arduino devices (Uno or Nano recommended)
+  Use the `analogRead(PIN)` command and replace "PIN" with the pin variable or A0, A1, etc.
+
+#### Wiring Guide (Nano shown):
+![BioEXG Sensor](https://www.crowdsupply.com/img/1535/518ed265-c363-4bf9-a268-4705e3a01535/bioamp-exg-pill-electromyography_png_md-xl.jpg)
 
