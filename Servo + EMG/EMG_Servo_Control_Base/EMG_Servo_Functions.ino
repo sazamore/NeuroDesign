@@ -75,6 +75,7 @@ void checkThreshold(int signalValue) {
       
       // Threshold crossed! Move servo to active position
       // Place your servo command here. It can be: myservo.write(somePosition);
+      // myservo.write(90); //demo code. change as needed.
 
       // Update last trigger time
       LAST_TRIGGER_TIME = currentTime;
@@ -85,14 +86,14 @@ void checkThreshold(int signalValue) {
     } 
     // else {
       // Signal below threshold, add your servo actions
-      //myservo.write(SOMEVALUEGOESHERE);
+      //myservo.write(SERVOrest);
     // }
     
   } 
   else {
     // Still in lockout period - ignore signal
     // Servo stays in current position
-    // myservo.write(SOMEVALUEGOESHERE);
+    // myservo.write(90); // demo example. change as needed.
     Serial.println("Servo holdes position");
   }
 }

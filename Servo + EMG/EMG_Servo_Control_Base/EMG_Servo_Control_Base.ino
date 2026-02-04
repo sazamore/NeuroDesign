@@ -37,7 +37,7 @@ int EMGrect = 0;          // Rectified EMG reading
 int EMGfilt = 0;           // Filtered signal value
 
 // Servo object
-// Servo whichMotor; // select and assign the motor arm motor(s) here
+// Servo myservo; // select and assign the motor arm motor(s) here
 
 // ============= SETUP FUNCTION =============
 
@@ -46,10 +46,10 @@ void setup() {
   Serial.begin(112500); // be sure to change your Serial plotter baud rate too!
   
   // Attach servo to pin
- // MYSERVO.attach(SERVOpin);
+  // myservo.attach(SERVOpin);
   
   // Set servo to rest position
- // MYSERVO.write(SERVOrest);
+  // myservo.write(SERVOrest);
   
   // Print startup message
  // Serial.println("EMG Servo Control Started");
