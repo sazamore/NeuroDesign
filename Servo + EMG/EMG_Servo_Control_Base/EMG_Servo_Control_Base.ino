@@ -20,8 +20,9 @@ const int RECTpin = A1;     // Rectified EMG input pin
 const int SERVOpin = 9;          // Servo control pin
 
 // Threshold settings
-const int THRESHOLD = 512;        // Threshold value (0-1023, adjust based on your EMG)
-const int LOCKOUT_TIME = 30;      // Lockout time in milliseconds
+const int THRESHOLD = 200;        // Threshold value (adjust based on your EMG)
+const int DEBOUNCE_TIME = 50;      // Debounce lockout time, in milliseconds
+// Lockout can be the amount of time to execute the servo command.
 
 // Servo positions
 const int SERVOrest = 0;         // Servo rest position (degrees)
@@ -64,17 +65,21 @@ void loop() {
   
   // Apply bandpass filter to rectified signal
   EMGfilt = bandpassFilter(EMGrect);
+
+  // If needed, place smoothing commands here
+
+  // Place thresholding commands here
     
   // Print values to serial monitor (for debugging)
-  Serial.print("Raw: ");
+  Serial.print("Raw:");
   Serial.print(EMGraw);
-  Serial.print(" | Rectified: ");
-  Serial.print(RECTIFIED_VALUE);
-  Serial.print(" | Filtered: ");
-  Serial.println(FILTERED_VALUE);
+  Serial.print(", ");
+  Serial.print("Rectified:");
+  Serial.print(EMGrect);
+  Serial.print(", ");
+  Serial.print("Filtered: ");
+  Serial.println(EMGfilt);
   
-  // Small delay for stability
-  delay(10);
 }
 
 // ============= BANDPASS FILTER FUNCTION =============

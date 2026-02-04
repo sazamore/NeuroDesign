@@ -55,7 +55,7 @@ int smoothSignal(int inputValue) {
   checkThreshold(EMGsmth);
   
   Don't forget to add a global variable at the top:
-  int SMOOTHED_VALUE = 0;
+  int EMGsmth = 0;
 */
 
 // ============= THRESHOLD DETECTION FUNCTION =============
@@ -68,29 +68,31 @@ void checkThreshold(int signalValue) {
   unsigned long timeSinceLastTrigger = currentTime - LAST_TRIGGER_TIME;
   
   // Only check threshold if lockout period has passed
-  if (timeSinceLastTrigger >= LOCKOUT_TIME) {
+  if (timeSinceLastTrigger >= DEBOUNCE_TIME) {
     
     // Check if signal exceeds threshold
     if (signalValue > THRESHOLD) {
       
       // Threshold crossed! Move servo to active position
-      MYSERVO.write(SERVO_ACTIVE);
-      
+      // Place your servo command here. It can be: myservo.write(somePosition);
+
       // Update last trigger time
       LAST_TRIGGER_TIME = currentTime;
       
       // Print trigger message
       Serial.println("THRESHOLD CROSSED! Activate the servo .");
       
-    } else {
+    } 
+    // else {
       // Signal below threshold, add your servo actions
-      Serial.println("Servo rest position or hold signal here.")
       //myservo.write(SOMEVALUEGOESHERE);
-    }
+    // }
     
-  } else {
+  } 
+  else {
     // Still in lockout period - ignore signal
     // Servo stays in current position
     // myservo.write(SOMEVALUEGOESHERE);
+    Serial.println("Servo holdes position");
   }
 }
