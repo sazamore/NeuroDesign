@@ -17,7 +17,7 @@
 // Pin definitions
 const int EMGpin = A0;           // Raw EMG input pin
 const int RECTpin = A1;     // Rectified EMG input pin
-const int SERVOpin = 9;          // Servo control pin
+const int SERVOpin = 3;          // Servo control pin
 
 // Threshold settings
 const int THRESHOLD = 200;        // Threshold value (adjust based on your EMG)
@@ -46,10 +46,10 @@ void setup() {
   Serial.begin(112500); // be sure to change your Serial plotter baud rate too!
   
   // Attach servo to pin
- // MYSERVO.attach(SERVO_PIN);
+ // MYSERVO.attach(SERVOpin);
   
   // Set servo to rest position
- // MYSERVO.write(SERVO_REST);
+ // MYSERVO.write(SERVOrest);
   
   // Print startup message
  // Serial.println("EMG Servo Control Started");
