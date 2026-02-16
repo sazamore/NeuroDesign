@@ -1,10 +1,17 @@
 # NeuroDesign
 ## Code overview:
-  - PickUp - contains code that executes a pick up-rotate-drop function with the arm
-  - Servo + EMG folder - contains all code for working with servos and EMGs (Units 1 and 2)
+  - Balance EMG folder - contains all code for Unit 2 - working with 2 channels and producing coactivation index values.
+    - single_EMG_norm - code to record from one module with normalization (MVC)
+    - dual_EMG_norm - code to record from two modules with normalized signals.
+    - dual_EMG_CI - returns coActivation index, plus normalized values for each muschle<br>
+  - Servo + EMG folder - contains all code for Unit 1 - working with servos and EMGs (Units 1 and 2)
     - (advanced) **AutoArm_SweepTest** - for testing the functionality of each servo in the arm
     - (intermediate/class on Feb 3) **EMG_Analogread** - for reading EMG signal with analogRead() command, and driving a servo arm conditionally
     - (early/class on Jan 28) **ThresholdSweep** - developed in class on Jan 28. Uses a random value to selectively drive a servo motor.
+
+## Resources for EOG recording (Weds 2/18)
+ - Code will be in the Balance EOG folder
+ - Visual stimulus to evoke L/R eye movement: [p5.js example](https://editor.p5js.org/sazamore/full/Y1YfNpO1e)
 
 ## Resources for EMG Sensor Devices
 
