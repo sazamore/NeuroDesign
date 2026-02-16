@@ -1,5 +1,6 @@
 # NeuroDesign
 ## Code overview:
+  - **Pre-processing functions.ino** - contains smoothing and bandpass filtering for use in other sketches.
   - **Balance EMG folder** - contains all code for Unit 2 - working with 2 channels and producing coactivation index values.
     - single_EMG_norm - code to record from one module with normalization (MVC)
     - dual_EMG_norm - code to record from two modules with normalized signals.
