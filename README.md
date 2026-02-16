@@ -21,6 +21,7 @@
 ### MyoWare 2.0
 **Note** The Myoware model is relatively new and there is little support an tested example code available. The following guidelines are based on my testing. I will reach out to the company to get more information hopefully by Feb 3.
 [Available for purchase here](https://www.sparkfun.com/myoware-2-muscle-sensor.html)
+[Quick guide](https://cdn.sparkfun.com/assets/learn_tutorials/1/9/5/6/MyoWare_v2_QuickStartGuide.pdf)
 
 #### Working with this device:
   Arduino devices (Uno or Nano recommended)
