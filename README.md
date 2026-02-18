@@ -1,10 +1,11 @@
 # NeuroDesign
 ## Code overview:
-  - **Pre-processing functions.ino** - contains smoothing and bandpass filtering for use in other sketches.
   - **Balance EMG folder** - contains all code for Unit 2 - working with 2 channels and producing coactivation index values.
     - single_EMG_norm - code to record from one module with normalization (MVC)
     - dual_EMG_norm - code to record from two modules with normalized signals.
     - dual_EMG_CI - returns coActivation index, plus normalized values for each muschle<br>
+    - dual_EMG_CI_csv - adds a delay to slow output for UART signalling.
+    - EMG_functions - contains thresholding, smoothing and bandpass filtering for use in other sketches.
   - **Servo + EMG folder** - contains all code for Unit 1 - working with servos and EMGs (Units 1 and 2)
     - (advanced) **AutoArm_SweepTest** - for testing the functionality of each servo in the arm
     - (intermediate/class on Feb 3) **EMG_Analogread** - for reading EMG signal with analogRead() command, and driving a servo arm conditionally
