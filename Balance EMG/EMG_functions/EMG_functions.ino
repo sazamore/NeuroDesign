@@ -19,10 +19,17 @@
   Add a tab to your sketch. Title it EMG functions.
   Add these functions there and then call them in your main sketch (first tab).
   
-  Add a global variable above setup:
+  Add global variables above setup:
   int EMGsmth = 0;
 
-  In your main loop:
+  // Threshold settings
+  const int THRESHOLD = 200;        // Threshold value (adjust based on your EMG)
+  const int DEBOUNCE_TIME = 50;      // Debounce lockout time, in milliseconds
+
+  // Timing variables
+  unsigned long LAST_TRIGGER_TIME = 0;  // Last time threshold was crossed
+
+  In the loop function:
   
   EMGfilt = bandpassFilter(EMGrect);
   EMGsmth = smoothSignal(EMGrect);
