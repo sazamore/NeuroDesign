@@ -1,14 +1,17 @@
 /*
  * ERM_Discrimination.ino
- * Haptic Mimicry Course — Day 2 Lab
+ * Haptic Mimicry Unit — Exploratory Lab
  *
  * Drives a DRV2605L in PWM/Analog Input mode.
  * TRIAL - Type TWO VALUES 1-5, one after the other, to run a pair (A then B).
  * CATCH - Press C to run a catch trial. Catch trials produce the same level twice, the level is chosen randomly.
+ * 
  * Each catch or trial will run the full trial: 
  *     1) signal the motor run at first level for 800 ms.
  *     2) Pause for 1000 ms. 
  *     3) signal the motor to run at second level for 800 ms.
+ * 
+ * Catch trials run motor at the LAST LEVEL ENTERED
  *
  * Wiring:
  *   DRV2605L GND  -> Arduino GND
@@ -32,32 +35,35 @@ const int PWM_PIN       = 9;
 const int BUZZ_DURATION = 800;    // ms motor runs per stimulus
 const int GAP_DURATION  = 1000;   // ms silence between A and B
 
-// SIGNAL SENSITIVTY: Adjust the level range to account for tactile sensitivity
-const int   LEVELS[5]      = {64, 110, 160, 200, 255};
+// Motor drive values
+// =========== SENSITIVITY ADJUSTMENT HAPPENS HERE =================
+const int MIN_OUT   = 150;  // PWM value for level 1 (weakest)
+const int MAX_OUT   = 255;  // PWM value for level 5 (strongest); LOWER THIS to lower overall intensity
+const int MOTOR_OFF = 127;  // center point — motor stopped
+
 const char* LEVEL_NAMES[5] = {"1 (25%)", "2 (43%)", "3 (63%)", "4 (78%)", "5 (100%)"};
 
 bool waitingForB = false;
 int  levelA      = -1;
 
-// ── helpers ──────────────────────────────────────────────────────────────────
+// ── helper functions ──────────────────────────────────────────────────────────────────
 
-void runBuzz(int pwmVal, int durationMs) {
-  //
+void runBuzz(int level, int durationMs) {
+  int pwmVal = map(level, 1, 5, MIN_OUT, MAX_OUT);
   analogWrite(PWM_PIN, pwmVal);
   delay(durationMs);
-  analogWrite(PWM_PIN, 0);
+  analogWrite(PWM_PIN, MOTOR_OFF);
 }
 
-void runPair(int idxA, int idxB, bool isCatch) {
-  //runs two instances of the buzz stimulus
+void runPair(int levelA, int levelB, bool isCatch) {
   Serial.print(isCatch ? "CATCH  — A: " : "PAIR   — A: ");
-  Serial.print(LEVEL_NAMES[idxA]);
+  Serial.print(LEVEL_NAMES[levelA - 1]);  // -1 to convert level 1-5 to index 0-4
   Serial.print("  B: ");
-  Serial.println(LEVEL_NAMES[idxB]);
+  Serial.println(LEVEL_NAMES[levelB - 1]);
 
-  runBuzz(LEVELS[idxA], BUZZ_DURATION);
+  runBuzz(levelA, BUZZ_DURATION);
   delay(GAP_DURATION);
-  runBuzz(LEVELS[idxB], BUZZ_DURATION);
+  runBuzz(levelB, BUZZ_DURATION);
 
   Serial.println("  [Complete — record response. Reveal trial type ONLY to the Recorder]");
 }
@@ -65,13 +71,36 @@ void runPair(int idxA, int idxB, bool isCatch) {
 // ── setup ────────────────────────────────────────────────────────────────────
 
 void setup() {
+  TCCR1B = TCCR1B & 0b11111000 | 0x01; // set PWM frequency above audible range
+
+  pinMode(PWM_PIN, OUTPUT);
+  digitalWrite(PWM_PIN, LOW);           // hold pin low during I2C init
+
   Serial.begin(9600);
   Wire.begin();
+
+  for (byte addr = 1; addr < 127; addr++) {
+    Wire.beginTransmission(addr);
+    byte error = Wire.endTransmission();
+    if (error == 0) {
+      Serial.println("I2C Device found.");
+    }
+  }
+
   HMD.begin();
-  HMD.Mode(3);           // Select PWM/Analog Input mode
-  HMD.MotorSelect(0x36); // Select ERM motor type
-  analogWrite(PWM_PIN, 0);
-  randomSeed(analogRead(A0)); // floating pin for randomness
+  delay(100);
+  HMD.Mode(3);           // PWM/Analog Input mode
+  HMD.MotorSelect(0x0A); // ERM motor type
+  HMD.Library(7);        // open loop ERM
+  delay(100);
+
+  analogWrite(PWM_PIN, MOTOR_OFF);
+  randomSeed(analogRead(A0));
+
+  // startup test buzz
+  analogWrite(PWM_PIN, MAX_OUT);
+  delay(500);
+  analogWrite(PWM_PIN, MOTOR_OFF);
 
   Serial.println("DRV2605L ready. Press the following keys to drive stimulus:");
   Serial.println("    1-5  : press once for stimulus A, again for stimulus B");
@@ -79,6 +108,7 @@ void setup() {
   Serial.println("---");
 }
 
+// ── main loop ────────────────────────────────────────────────────────────────
 
 void loop() {
   if (!Serial.available()) return;
@@ -91,25 +121,25 @@ void loop() {
       waitingForB = false;
       levelA = -1;
     }
-    int idx = random(0, 5);
-    runPair(idx, idx, true);
+    int level = random(1, 6);           // 1-5 inclusive
+    runPair(level, level, true);
     return;
   }
 
   // ── test pair ─────────────────────────────────────────────────────────────
   if (key >= '1' && key <= '5') {
-    int idx = key - '1';
+    int level = key - '0';              // '1'->1, '2'->2 ... '5'->5
 
     if (!waitingForB) {
-      levelA      = idx;
+      levelA      = level;
       waitingForB = true;
-      Serial.print("Stim A run: ");
-      Serial.print(LEVEL_NAMES[levelA]);
+      Serial.print("Stim A queued: ");
+      Serial.print(LEVEL_NAMES[levelA - 1]);
       Serial.println("  — press 1-5 for B, or C to cancel with a catch trial");
-      runBuzz(LEVELS[levelA], BUZZ_DURATION);
+      // runBuzz removed — both stimuli fire together in runPair
 
     } else {
-      runPair(levelA, idx, false);
+      runPair(levelA, level, false);
       waitingForB = false;
       levelA      = -1;
     }
